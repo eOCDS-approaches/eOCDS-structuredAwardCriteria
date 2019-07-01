@@ -1,39 +1,36 @@
-# Requirements
+# Criteria
 
-The requirements extension is based on the EU's [Core Criterion and Core Evidence Vocabulary (CCCEV)](https://joinup.ec.europa.eu/node/153001) model for communicating criteria and responses.
+Set of criteria may include different types of requirements, used in different way and for the different reasons. Moreover, some of used criteria may be prescribed by the legal basis “by default” (exclusion grounds of ESPD or particular chapters of selection grounds from ESPD, like General yearly turnover). 
 
-The extension is designed to allow procuring entities or buyers to express criteria, relating to either items being procured or bidders themselves, as structured data.
+## Types of criteria
 
-Criteria can be responded to either by bidders, buyers or procuring entities, for example a buyer may respond with information about an item whilst a procuring entity may respond with information on whether a bidder is disbarred.
+Under each Contracting Process Procuring Entity may define and apply a various types of criteria for the scoring function. These different types are following:
 
-## CCCEV Model
+**Exclusion grounds** - group of these criteria are eligibility criteria put forward by the Procuring Entity to the candidates - all of them are published in the Contract Notice and relate to the whole procedure.
 
-The CCCEV model defines the following concepts:
+**Selection criteria and minimum qualification requirements** - group of these criteria is also eligibility criteria, but it is optional for the Procuring Organization to apply for the tender. The criteria allow determining the quantitative and qualitative criteria for candidates for participation in the procedure.
 
-**Criterion**
-A criterion represents a rule or principle used to judge, evaluate or assess either an item or bidder. A criterion is satisfied when one or more of it's requirement groups are satisfied.
+**Allowances**
+The group of these criteria is the award criteria and should be taken into account by the Procuring Organization in cases determined by the relevant law, which also defines a set of such criteria and their values. Examples include the following criteria:
 
-**Requirement Group**
-A requirement group is a collection of one or more individual requirements. A requirement group is satisfied when all of it's requirements are satisfied.
+- The proposal of the candidate-resident of the country of jurisdiction receives a reduction factor 
+- The proposal of a candidate-resident of the country of jurisdiction if such candidate is an organization in the category of SMEs receives a reduction factor of price.
 
-**Requirement**
-An atomic requirement which can be expressed as either an expected value or a range of accepted values.
+**Non-price criteria**
+The group of these criteria is the award criteria and can be applied by the PEn in the case of the Most Economic Advantages Tender strategy. MEAT is recognized as winning according to the following criteria:
 
-**Requirement Response**
-A requirements response is an assertion that responds to a specific requirement.
+- in case of contracts for public procurement of goods - the price, delivery time, payment terms, profitability, quality, aesthetic, functional and technical characteristics, capabilities and cost of technical assistance and maintenance;
+- in the case of contracts for public procurement of works - the proposed quality, the cost per unit of product of the bidder by the end of the work, the total price, the experience of the bidder, etc. The share of the price in the total evaluation of the offers should not be less than 80 per cent;
+- in the case of contracts for public procurement of services - the proposed quality, the cost per unit of the offeror’s products, the total price, the experience of the bidder, etc. The price share in the total evaluation of the offers should not be less than 40 per cent.
 
-Therefore the CCCEV model can be used to express both **AND** conditions, where a group of requirements must be met to satisfy a criterion, and **OR** conditions, where there are alternative requirements that can satisfy a criterion.
+So depending on the category of procurement, the PE can determine a set of non-price criteria (quantitative and qualitative) in the range of 20-60%, which will be taken into account along with the price part of the offer and affect the absolute economic value of the entire tender proposal of the participant, increasing his chances to win the tender,  do not lower the price (suggesting the most favorable economic conditions). 
 
-## Schema
+## Criterion values
 
-The extension introduces a new building block for each of the concepts described above, these are added to the following locations in the OCDS schema:
+Each of described requirements may or may not be associated with a set of available values. For example, Exclusion Grounds and Allowances available as ‘true/false’ flags and no other options. And Selection or Non-price criteria usually contains not only default or minimum requirements but also other values, available for the tenderers’ choice. Where this is the case, Procuring Entity obliged to specify in advance:
 
-- *tender.criteria* - an array of criteria
-- *tender.criteria.requirementGroups* - an array of requirement groups
-- *tender.criteria.requirementGroups.requirements* - an array of requirements
-- *bids.requirementResponses* - an array of requirement responses (Note: depends on *bid* extension)
-- *awards.requirementResponses* - an array of requirements responses
-- *contracts.requirementResponses* - an array or requirement responses
+- features, the values for which will be the subject of electronic auction, provided that such features are quantifiable and can be expressed in figures or percentages
+- any limits on the values which may be submitted, as they result from the specifications relating to the subject of the contract  
 
 ## Example
 
@@ -42,97 +39,68 @@ Below is an example of requirements specified against both an item and a bidder 
 ```json
 {
   "tender": {
+    "items": [
+      {
+        "id": "001",
+        "quantity": 10
+      },
+      {
+        "id": "002",
+        "quantity": 10
+      }
+    ],
     "criteria": [
       {
-        "id": "0001",
-        "title": "Air intake",
-        "description": "The vacuum cleaner air intake must be at least 100W",
+        "id": "002",
+        "title": "Service warranty",
+        "description": "A minimum product warranty of 1 year is required",
         "source": "tenderer",
-        "code": "OCDS-123454-AIR",
-        "featureOf": "item",
-        "relatedItem": "0001",
+        "relatesTo": "item",
+        "relatedItem": "001",
         "requirementGroups": [
           {
-            "id": "0001-001",
-            "description": "The vacuum cleaner air intake must be at least 100W",
+            "id": "002-1",
             "requirements": [
               {
-                "id": "0001-001-01",
-                "title": "Air intake",
-                "description": "Power of vacuum cleaner air intake in W",
-                "dataType": "integer",
-                "pattern": "[0-9]*",
-                "minValue": 100
-              }
-            ]
-          }
-        ]
-      },
-      {
-        "id": "0002",
-        "title": "Warranty",
-        "description": "The vacuum cleaner must have warranty support options for at least 36 months",
-        "source": "tenderer",
-        "code": "OCDS-123454-WARRANTY",
-        "featureOf": "item",
-        "relatedItem": "0001",
-        "requirementGroups": [
-          {
-            "id": "0002-001",
-            "description": "The standard warranty period for the vacuum cleaner must be at least 36 months",
-            "requirements": [
-              {
-                "id": "0002-001-01",
-                "title": "Standard warranty period",
-                "description": "Length of the vacuum cleaner standard warranty period in months",
-                "dataType": "integer",
-                "pattern": "[0-9]*",
-                "minValue": 36
-              }
-            ]
-          },
-          {
-            "id": "0002-002",
-            "description": "The standard warranty period for the vacuum cleaner must be at least 12 months with an option to extend to 36 months",
-            "requirements": [
-              {
-                "id": "0002-002-01",
-                "title": "Standard warranty period",
-                "description": "Length of the vacuum cleaner standard warranty period in months",
-                "dataType": "integer",
-                "pattern": "[0-9]*",
-                "minValue": 12
+                "id": "002-1-1",
+                "title": "A minimum warranty of 1 year is guaranteed",
+                "dataType": "boolean",
+                "expectednValue": true
               },
               {
-                "id": "0002-002-02",
-                "title": "Extended warranty option",
-                "description": "There is an extended warranty option for at least 36 months",
-                "dataType": "boolean",
-                "expectedValue": true
+                "id": "002-1-2",
+                "title": "The number of years for proposed warranty",
+                "dataType": "integer",
+                "minValue": 1,
+                "maxValue": 3
               }
             ]
           }
         ]
       },
       {
-        "id": "0003",
-        "title": "Years trading",
-        "description": "Number of years the bidder has been trading",
+        "id": "003",
+        "title": "Capacity",
+        "description": "Minimum qualification requirements",
         "source": "tenderer",
-        "code": "OCDS-123454-YEARS",
-        "featureOf": "tenderer",
+        "relatesTo": "tenderer",
         "requirementGroups": [
           {
-            "id": "0003-001",
-            "description": "Number of years the bidder has been trading",
+            "id": "003-1",
             "requirements": [
               {
-                "id": "0003-001-01",
-                "title": "Years trading",
-                "description": "Number of years the bidder has been trading",
+                "id": "003-1-1",
+                "title": "At least one Google-certified specialist on-board",
+                "dataType": "boolean",
+                "expectedValue": true
+              },
+              {
+                "id": "003-1-2",
+                "title": "Number of Google-certified staff",
+                "description": "",
                 "dataType": "integer",
-                "pattern": "[0-9]*",
-                "minValue": 3
+                "minValue": 1,
+                "maxValue": 5
               }
             ]
           }
@@ -172,20 +140,6 @@ Below is an example of responses which meet the above requirements:
   ]
 }
 ```
-
-## Further extensions
-
-The CCCEV model also defines a number of additional concepts including **formalFrameworks**, used to specify the legal instruments from criteria are derived, **evidence**, used both to specify and provide the evidence required to support a requirement response, and additional properties of *requirements* such as **certificationLevel** which are not currently implemented in this extension.
-
-## Issues
-
-Report issues for this extension in the [ocds-extensions repository](https://github.com/open-contracting/ocds-extensions/issues), putting the extension's name in the issue's title.
-
-## Changelog
-
-This extension was originally discussed in <https://github.com/open-contracting/standard/issues/223>.
-
-### 2019-03-20
 
 * Set `"uniqueItems": true` on array fields, and add `"minLength": 1` on required string fields.
 
