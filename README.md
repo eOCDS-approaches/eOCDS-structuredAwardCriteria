@@ -110,3 +110,88 @@ Below is an example of requirements specified against both an item and a tendere
   }
 }
 ```
+# Digitized bid: formulation of the offer according to defined scoring function
+
+Once the clarification period is over the CA can no longer introduce changes into the Contract Notice, Economic Operators submit offers that are confidential. 
+
+## Requirement responses
+
+Having a set of requirements predefined by Procuring Entity and a number of values available, tenderers by preparing their offers, include a values for each requirement, reflecting the substance of the offer and fulfilling general corporate profiles’ data requested by Procuring Entity or required by the Legal Framework of particular jurisdiction. While submitting their proposal tenderers also fill the non-price parameters — values for specific verifiable tenderer attributes of the offer. 
+During following e-Auction all this specified values will become the subject of competition, provided that such features are quantifiable and can be expressed in figures or percentages.
+
+Submitted offer includes:
+
+1. organization profile according to the extended ‘organization’ model
+2. absolute value of the amount of price offer
+3. decomposed set of unit prices (if requested by Procuring Entity)
+4. set of documents of the offer, specified with relevant types of documents for their future splitting into the different "envelopes"
+5. set of required responses according to criteria specified by Procuring Entity within Contract Notice:
+
+5.1 commitment on exclusion grounds
+5.2 commitment on selection criteria (including absolute values if required)
+5.3 commitment on minimum technical requirements (including absolute values if required)
+5.4 set of values for non-price criteria
+5.5 set of values for subject specification 
+
+## Example
+
+Below is an example of requirements specified against both an item and a tenderer:
+
+```json
+{
+  "bids": {
+    "details": [
+      {
+        "id": "",
+        "value": {
+          "amount": 10000.00,
+          "currency": "USD"
+        },
+        "items": [
+          
+            "id": "001",
+            "unit": {
+              "value": {
+                "amount": 450.00,
+                "currency": "USD"
+              }
+            }
+          },
+          {
+            "id": "002",
+            "unit": {
+              "value": {
+                "amount": 450.00,
+                "currency": "USD"
+              }
+            }
+          }
+        ],
+        "tenderers": [],
+        "requirementResponses": [
+          {
+            "id": "002-1-1",
+            "value": true,
+            "requirement": "001-1-1"
+          },
+          {
+            "id": "002-1-2",
+            "value": 2,
+            "requirement": "002-1-2"
+          },
+          {
+            "id": "003-1-1",
+            "value": true,
+            "requirement": "003-1-1"
+          },
+          {
+            "id": "003-1-2",
+            "value": 4,
+            "requirement": "003-1-2"
+          }
+        ]
+      }
+    ]
+  }
+}
+```
