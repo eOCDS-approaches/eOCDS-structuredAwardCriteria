@@ -110,7 +110,7 @@ Below is an example of requirements specified against both an item and a tendere
   }
 }
 ```
-# Digitized bid: formulation of the offer according to defined scoring function
+# Digitized bid
 
 Once the clarification period is over the CA can no longer introduce changes into the Contract Notice, Economic Operators submit offers that are confidential. 
 
