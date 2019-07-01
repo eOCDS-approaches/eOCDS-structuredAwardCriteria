@@ -34,7 +34,7 @@ Each of described requirements may or may not be associated with a set of availa
 
 ## Example
 
-Below is an example of requirements specified against both an item and a bidder which demonstrates both **AND** and **OR** conditions:
+Below is an example of requirements specified against both an item and a tenderer:
 
 ```json
 {
@@ -110,39 +110,3 @@ Below is an example of requirements specified against both an item and a bidder 
   }
 }
 ```
-
-Below is an example of responses which meet the above requirements:
-
-```json
-{
-  "bids": [
-    {
-      "requirementResponses": [
-        {
-          "id": "air",
-          "value": 125,
-          "requirement": "0001-001-01",
-          "relatedItem": "0001"
-        },
-        {
-          "id": "warranty",
-          "value": 36,
-          "requirement": "0002-001-01",
-          "relatedItem": "0001"
-        },
-        {
-          "id": "years",
-          "value": 10,
-          "requirement": "0003-001-01"
-        }
-      ]
-    }
-  ]
-}
-```
-
-* Set `"uniqueItems": true` on array fields, and add `"minLength": 1` on required string fields.
-
-### 2018-12-18
-
-* `Requirement.expectedValue` and `RequirementResponse.value` allow boolean values.
