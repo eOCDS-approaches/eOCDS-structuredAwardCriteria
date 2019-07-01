@@ -137,7 +137,7 @@ Submitted offer includes:
 
 Below is an example of requirements specified against both an item and a tenderer:
 
-```
+```json
 {
   "bids": {
     "details": [
