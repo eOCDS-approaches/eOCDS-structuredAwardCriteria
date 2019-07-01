@@ -127,17 +127,17 @@ Submitted offer includes:
 4. set of documents of the offer, specified with relevant types of documents for their future splitting into the different "envelopes"
 5. set of required responses according to criteria specified by Procuring Entity within Contract Notice:
 
-5.1 commitment on exclusion grounds
-5.2 commitment on selection criteria (including absolute values if required)
-5.3 commitment on minimum technical requirements (including absolute values if required)
-5.4 set of values for non-price criteria
-5.5 set of values for subject specification 
+- commitment on exclusion grounds
+- commitment on selection criteria (including absolute values if required)
+- commitment on minimum technical requirements (including absolute values if required)
+- set of values for non-price criteria
+- set of values for subject specification 
 
 ## Example
 
 Below is an example of requirements specified against both an item and a tenderer:
 
-```json
+```
 {
   "bids": {
     "details": [
@@ -148,7 +148,7 @@ Below is an example of requirements specified against both an item and a tendere
           "currency": "USD"
         },
         "items": [
-          
+          {
             "id": "001",
             "unit": {
               "value": {
